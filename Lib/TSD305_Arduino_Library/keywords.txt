@@ -1,0 +1,26 @@
+#######################################
+# Syntax Coloring Map For tsd305
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+tsd305	KEYWORD1
+tsd305_status	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+is_connected	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+	tsd305_status_ok	LITERAL1,
+	tsd305_status_no_i2c_acknowledge	LITERAL1,
+	tsd305_status_i2c_transfer_error	LITERAL1,
+	
