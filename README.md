@@ -1,4 +1,4 @@
-# Weather-Shield-TE-Connection
+# Weather-Shield-TE-Connectivity-ESP8266
 Use board Weather Shield with esp8266 NODE MCU
 https://github.com/TEConnectivity/Weather_Shield_Arduino_Library
 .Lib of TEConnectivity only compatible with Arduino
