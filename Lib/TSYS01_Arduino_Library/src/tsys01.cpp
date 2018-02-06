@@ -70,7 +70,7 @@ enum tsys01_status tsys01::write_command(uint8_t cmd) {
   Wire.beginTransmission((uint8_t)tsys01_i2c_address);
   Wire.write(cmd);
   i2c_status = Wire.endTransmission();
-
+  delay(150);
   if (i2c_status == tsys01_STATUS_ERR_OVERFLOW)
     return tsys01_status_no_i2c_acknowledge;
   if (i2c_status != tsys01_STATUS_OK)
@@ -111,7 +111,7 @@ enum tsys01_status tsys01::read_eeprom_coeff(uint8_t command, uint16_t *coeff) {
   Wire.beginTransmission((uint8_t)tsys01_i2c_address);
   Wire.write(command);
   i2c_status = Wire.endTransmission();
-
+  delay(150);
   Wire.requestFrom((uint8_t)tsys01_i2c_address, 2U);
   for (i = 0; i < 2; i++) {
     buffer[i] = Wire.read();
@@ -205,6 +205,7 @@ enum tsys01_status tsys01::conversion_and_read_adc(uint32_t *adc) {
   Wire.beginTransmission((uint8_t)tsys01_i2c_address);
   Wire.write((uint8_t)TSYS01_READ_ADC_TEMPERATURE);
   Wire.endTransmission();
+  delay(150);
   Wire.requestFrom((uint8_t)tsys01_i2c_address, 3U);
   for (i = 0; i < 3; i++) {
     buffer[i] = Wire.read();
