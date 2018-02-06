@@ -133,7 +133,7 @@ enum htu21_status htu21d::read_user_register(uint8_t *value) {
   Wire.beginTransmission((uint8_t)HTU21_ADDR);
   Wire.write((uint8_t)HTU21_READ_USER_REG_COMMAND);
   i2c_status = Wire.endTransmission();
-
+  delay(150);
   Wire.requestFrom((uint8_t)HTU21_ADDR, (uint8_t)1);
   buffer[0] = Wire.read();
 
@@ -175,7 +175,7 @@ enum htu21_status htu21d::write_user_register(uint8_t value) {
   Wire.write((uint8_t)HTU21_WRITE_USER_REG_COMMAND);
   Wire.write((uint8_t)reg);
   i2c_status = Wire.endTransmission();
-
+  delay(150);
   if (i2c_status == htu21_STATUS_ERR_OVERFLOW)
     return htu21_status_no_i2c_acknowledge;
   if (i2c_status != htu21_STATUS_OK)
@@ -305,7 +305,7 @@ enum htu21_status htu21d::write_command(uint8_t cmd) {
   Wire.beginTransmission((uint8_t)HTU21_ADDR);
   Wire.write(cmd);
   i2c_status = Wire.endTransmission();
-
+  delay(150);
   /* Do the transfer */
   if (i2c_status == htu21_STATUS_ERR_OVERFLOW)
     return htu21_status_no_i2c_acknowledge;
@@ -396,6 +396,7 @@ enum htu21_status htu21d::temperature_conversion_and_read_adc(uint16_t *adc) {
   if (i2c_master_mode == htu21_i2c_hold) {
     Wire.write((uint8_t)HTU21_READ_TEMPERATURE_W_HOLD_COMMAND);
     Wire.endTransmission();
+	delay(150);
   } else {
     Wire.write((uint8_t)HTU21_READ_TEMPERATURE_WO_HOLD_COMMAND);
     Wire.endTransmission();
@@ -449,6 +450,7 @@ enum htu21_status htu21d::humidity_conversion_and_read_adc(uint16_t *adc) {
   if (i2c_master_mode == htu21_i2c_hold) {
     Wire.write((uint8_t)HTU21_READ_HUMIDITY_W_HOLD_COMMAND);
     Wire.endTransmission();
+	delay(150);
   } else {
     Wire.write((uint8_t)HTU21_READ_HUMIDITY_WO_HOLD_COMMAND);
     Wire.endTransmission();
@@ -630,7 +632,7 @@ enum htu21_status htu21d::read_serial_number(uint64_t *serial_number) {
   Wire.write((uint8_t)HTU21_READ_SERIAL_FIRST_8BYTES_COMMAND_MSB);
   Wire.write((uint8_t)HTU21_READ_SERIAL_FIRST_8BYTES_COMMAND_LSB);
   Wire.endTransmission();
-
+  delay(150);
   Wire.requestFrom(HTU21_ADDR, 8);
   for (i = 0; i < 8; i++) {
     rcv_data[i] = Wire.read();
@@ -641,7 +643,7 @@ enum htu21_status htu21d::read_serial_number(uint64_t *serial_number) {
   Wire.write((uint8_t)HTU21_READ_SERIAL_LAST_6BYTES_COMMAND_MSB);
   Wire.write((uint8_t)HTU21_READ_SERIAL_LAST_6BYTES_COMMAND_LSB);
   Wire.endTransmission();
-
+  delay(150);
   Wire.requestFrom(HTU21_ADDR, 6);
   for (i = 8; i < 14; i++) {
     rcv_data[i] = Wire.read();
