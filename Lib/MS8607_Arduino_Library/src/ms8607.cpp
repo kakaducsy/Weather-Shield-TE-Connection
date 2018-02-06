@@ -330,7 +330,7 @@ enum ms8607_status ms8607::hsensor_reset(void) {
   Wire.beginTransmission((uint8_t)HSENSOR_ADDR);
   Wire.write((uint8_t)HSENSOR_RESET_COMMAND);
   Wire.endTransmission();
-
+  
   if (status != ms8607_status_ok)
     return status;
 
@@ -393,7 +393,7 @@ enum ms8607_status ms8607::hsensor_read_user_register(uint8_t *value) {
   Wire.beginTransmission((uint8_t)HSENSOR_ADDR);
   Wire.write(HSENSOR_READ_USER_REG_COMMAND);
   i2c_status = Wire.endTransmission();
-
+  delay(150);
   Wire.requestFrom((uint8_t)HSENSOR_ADDR, 1U);
   buffer[0] = Wire.read();
 
@@ -443,7 +443,7 @@ enum ms8607_status ms8607::hsensor_write_user_register(uint8_t value) {
   Wire.write(HSENSOR_WRITE_USER_REG_COMMAND);
   Wire.write(reg);
   i2c_status = Wire.endTransmission();
-
+  delay(150);
   /* Do the transfer */
   if (i2c_status == i2c_status_err_overflow)
     return ms8607_status_no_i2c_acknowledge;
@@ -671,6 +671,7 @@ enum ms8607_status ms8607::psensor_reset(void) {
   Wire.beginTransmission((uint8_t)PSENSOR_ADDR);
   Wire.write(PSENSOR_RESET_COMMAND);
   Wire.endTransmission();
+  delay(150);
 }
 
 /**
@@ -745,7 +746,7 @@ enum ms8607_status ms8607::psensor_read_eeprom_coeff(uint8_t command,
   Wire.beginTransmission((uint8_t)PSENSOR_ADDR);
   Wire.write(command);
   i2c_status = Wire.endTransmission();
-
+  delay(150);
   Wire.requestFrom((uint8_t)PSENSOR_ADDR, 2U);
   for (i = 0; i < 2; i++)
     buffer[i] = Wire.read();
@@ -826,7 +827,7 @@ enum ms8607_status ms8607::psensor_conversion_and_read_adc(uint8_t cmd,
   Wire.beginTransmission((uint8_t)PSENSOR_ADDR);
   Wire.write((uint8_t)PSENSOR_READ_ADC);
   i2c_status = Wire.endTransmission();
-
+  delay(150);
   Wire.requestFrom((uint8_t)PSENSOR_ADDR, 3U);
   for (i = 0; i < 3; i++)
     buffer[i] = Wire.read();
